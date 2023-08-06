@@ -19,18 +19,28 @@ for book in books:
         continue
     if os.path.isdir(book):
         print(book)
-        #遍历当前文件夹下所有文件
+        # 遍历当前文件夹下所有文件
         files = os.listdir(book)
         with open(book + '/' + book + '.txt', 'w', encoding='utf-8') as fw:
             for file in files:
                 if os.path.isfile(book + '/' + file):
-                    #读取文件内容
+                    # 读取文件内容
                     with open(book + '/' + file, 'r', encoding='utf-8') as f:
                         text = f.read()
-                        #过滤文本
+                        # 删除前后的空格
+                        text = text.strip()
+                        # 过滤文本
                         text = text.replace(' ', '')
                         # text = text.replace('\n', '')
                         text = text.replace('\r', '')
                         text = text.replace('\t', '')
                         text = text.replace('　', '')
-                        fw.write(text)
+                        text = text.replace(' ', '')
+                        # 删除连续几段的空行
+                        for _ in range(3):
+                            text = text.replace('\n\n', '\n')
+
+                        fw.write(text + '\n')
+                    
+                    # 删除文件
+                    os.remove(book + '/' + file)
