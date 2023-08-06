@@ -23,6 +23,8 @@ for book in books:
         files = os.listdir(book)
         with open(book + '/' + book + '.txt', 'w', encoding='utf-8') as fw:
             for file in files:
+                if file == book + '.txt':
+                    continue
                 if os.path.isfile(book + '/' + file):
                     # 读取文件内容
                     with open(book + '/' + file, 'r', encoding='utf-8') as f:
@@ -39,8 +41,8 @@ for book in books:
                         # 删除连续几段的空行
                         for _ in range(3):
                             text = text.replace('\n\n', '\n')
-
+                        f.close()
                         fw.write(text + '\n')
-                    
+
                     # 删除文件
                     os.remove(book + '/' + file)
